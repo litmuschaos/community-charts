@@ -1,0 +1,34 @@
+apiVersion: litmuchaos.io/v1alpha1
+kind: ChartServiceVersion
+metadata:
+  createdAt: 2022-03-31T15:50:08Z
+  name: spring-boot
+  version: 0.1.0
+  annotations:
+    categories: SpringBoot
+    chartDescription: Injects chaos on spring boot applications running on Kubernetes
+spec:
+  displayName: Spring Boot
+  categoryDescription: >
+    Inject chaos on Spring Boot applications. 
+
+  experiments:
+    - spring-boot-chaos
+  keywords:
+    - Kubernetes
+    - K8S
+    - Pod
+    - SpringBoot
+  maintainers:
+    - name: stephane cazeaux
+      email: stephane.cazeaux@orange.com
+  minKubeVersion: 1.12.0
+  provider:
+    name: Stephane Cazeaux
+  links:
+    - name: Spring Boot
+      url: https://spring.io/projects/spring-boot
+  icon:
+    - url:
+      mediatype:
+  chaosexpcrdlink: https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/spring-boot/experiments.yaml

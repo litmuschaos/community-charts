@@ -1,0 +1,5 @@
+packageName: spring-boot
+experiments:
+  - name: spring-boot-chaos
+    CSV: spring-boot-chaos.chartserviceversion.yaml
+    desc: "spring-boot-chaos"

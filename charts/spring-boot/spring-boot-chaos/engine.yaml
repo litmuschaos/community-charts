@@ -1,0 +1,45 @@
+apiVersion: litmuschaos.io/v1alpha1
+kind: ChaosEngine
+metadata:
+  name: spring-boot-app-chaos
+  namespace: default
+spec:
+  appinfo:
+    appns: 'default'
+    applabel: 'app=springboot'
+    appkind: 'deployment'
+  # It can be active/stop
+  engineState: 'active'
+  chaosServiceAccount: spring-boot-chaos-sa
+  experiments:
+    - name: spring-boot-chaos
+      spec:
+        components:
+          env:
+            - name: TOTAL_CHAOS_DURATION
+              value: '15'
+
+            ## Period to wait before injection of chaos in sec
+            - name: RAMP_TIME
+              value: ''
+            # Latency assault active
+            - name: CM_LATENCY_ACTIVE
+              value: 'false'
+            # Memory assault active
+            - name: CM_MEMORY_ACTIVE
+              value: 'false'
+            # Memory assault active
+            - name: CM_CPU_ACTIVE
+              value: 'false'
+            # Memory assault active
+            - name: CM_EXCEPTION_ACTIVE
+              value: 'false'
+            # AppKiller assault active
+            - name: CM_KILL_APPLICATIONS_ACTIVE
+              value: 'false'
+            # Comma separated list of watchers. Possible values: controller, restController, service, repository, component, restTemplate, webClient, actuatorHealth
+            - name: CM_WATCHERS
+              value: 'restController'
+            # Level determines at which frequency the assault happens on the application. For a value N, the assaults happens every N requests
+            - name: CM_LEVEL
+              value: '1'

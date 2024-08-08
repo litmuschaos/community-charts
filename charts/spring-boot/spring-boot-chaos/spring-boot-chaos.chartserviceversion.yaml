@@ -1,0 +1,50 @@
+apiVersion: litmuchaos.io/v1alpha1
+kind: ChartServiceVersion
+metadata:
+  createdAt: 2022-03-31T15:50:08Z
+  name: spring-boot-chaos
+  version: 0.1.0
+  annotations:
+    categories: SpringBoot
+    chartDescription: Injects chaos on spring boot applications running on Kubernetes
+spec:
+  displayName: spring-boot-chaos
+  categoryDescription: |
+    Spring Boot Chaos contains chaos to inject assaults on Spring Boot applications running on kubernetes. Experiments can inject assault on random pod against specified application.
+    - Causes application faulty behavior: exception, latency, cpu/memory consumption.
+    - Tests system resiliency against faulty micro-services.
+
+  keywords:
+    - Kubernetes
+    - K8S
+    - Pod
+    - SpringBoot
+  platforms:
+    - GKE
+    - Konvoy
+    - Packet(Kubeadm)
+    - Minikube
+    - EKS
+    - AKS
+    - Kind
+    - Rancher
+    - OpenShift(OKD)
+  maturity: alpha
+  maintainers:
+    - name: Stephane Cazeaux
+      email: stephane.cazeaux@orange.com
+  minKubeVersion: 1.12.0
+  provider:
+    name: Stephane Cazeaux
+  labels:
+    app.kubernetes.io/component: chartserviceversion
+    app.kubernetes.io/version: latest
+  links:
+    - name: Source Code
+      url: https://github.com/litmuschaos/litmus-go/tree/master/experiments/spring-boot/spring-boot-chaos
+    - name: Chaos Monkey for Spring Boot
+      url: https://codecentric.github.io/chaos-monkey-spring-boot/
+  icon:
+    - url:
+      mediatype: ""
+  chaosexpcrdlink: https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/spring-boot/spring-boot-chaos/experiment.yaml
