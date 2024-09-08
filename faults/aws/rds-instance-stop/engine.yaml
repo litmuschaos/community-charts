@@ -1,0 +1,34 @@
+---
+apiVersion: litmuschaos.io/v1alpha1
+kind: ChaosEngine
+metadata:
+  name: aws-chaos
+  namespace: default
+spec:
+  engineState: 'active'
+  chaosServiceAccount: litmus-admin
+  experiments:
+    - name: rds-instance-stop
+      spec:
+        components:
+          env:
+            # set chaos duration (in sec) as desired
+            - name: TOTAL_CHAOS_DURATION
+              value: '30'
+
+            # set interval duration (in sec) as desired
+            - name: CHAOS_INTERVAL
+              value: '30'
+
+            # Instance Identifier of the target RDS instances
+            # ex: rds-demo-instance-1,rds-demo-instance-2
+            - name: RDS_INSTANCE_IDENTIFIER
+              value: ''
+
+            # provide the region name of the instance
+            - name: REGION
+              value: ''
+
+            # Target the percentage of instance filtered from tag
+            - name: INSTANCE_AFFECTED_PERC
+              value: ''

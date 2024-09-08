@@ -34,6 +34,9 @@ spec:
     - name: ebs-loss-by-tag
       description: It detach the EBS volume from AWS EC2 instance identified by Tag for a certain chaos duration.
       displayName: "EBS Loss By Tag"
+    - name: rds-instance-stop
+      description: It stops the RDS instance identified by instance identifier.
+      displayName: "RDS Instance Stop"
   keywords:
     - AWS
   maintainers:

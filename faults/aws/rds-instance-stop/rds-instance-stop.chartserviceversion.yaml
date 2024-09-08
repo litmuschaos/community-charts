@@ -1,0 +1,33 @@
+---
+apiVersion: litmuschaos.io/v1alpha1
+kind: ChartServiceVersion
+metadata:
+  createdAt: 2024-09-06T10:28:08Z
+  name: rds-instance-stop
+  version: 0.1.0
+  annotations:
+    categories: AWS
+    vendor: LitmusChaos
+spec:
+  displayName: RDS Instance Stop
+  categoryDescription: |
+    This fault causes termination of an RDS instance for a certain chaos duration.
+    - Causes termination of an RDS instance using instance identifier before bringing it back to available state after the specified chaos duration.
+    - It helps to check the performance of the application when the RDS instance is stopped.
+  keywords:
+    - AWS
+  platforms:
+    - AWS
+  maintainers:
+    - name: Jongwoo Han
+      email: jongwooo.han@gmail.com
+  chaosType: infra
+  labels:
+    app.kubernetes.io/component: chartserviceversion
+    app.kubernetes.io/version: ci
+  links:
+    - name: Documentation
+      url: https://litmuschaos.github.io/litmus/experiments/categories/contents
+  icon:
+    - url:
+      mediatype: ""

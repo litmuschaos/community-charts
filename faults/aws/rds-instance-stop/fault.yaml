@@ -1,0 +1,104 @@
+---
+apiVersion: litmuschaos.io/v1alpha1
+description:
+  message: |
+    Stopping an RDS instance identified by instance identifier.
+kind: ChaosExperiment
+metadata:
+  name: rds-instance-stop
+  labels:
+    name: rds-instance-stop
+    app.kubernetes.io/part-of: litmus
+    app.kubernetes.io/component: chaosexperiment
+    app.kubernetes.io/version: ci
+spec:
+  definition:
+    scope: Cluster
+    permissions:
+      # Create and monitor the experiment & helper pods
+      - apiGroups: [""]
+        resources: ["pods"]
+        verbs:
+          [
+            "create",
+            "delete",
+            "get",
+            "list",
+            "patch",
+            "update",
+            "deletecollection",
+          ]
+      # Performs CRUD operations on the events inside chaosengine and chaosresult
+      - apiGroups: [""]
+        resources: ["events"]
+        verbs: ["create", "get", "list", "patch", "update"]
+      # Fetch configmaps & secrets details and mount it to the experiment pod (if specified)
+      - apiGroups: [""]
+        resources: ["secrets", "configmaps"]
+        verbs: ["get", "list"]
+      # Track and get the runner, experiment, and helper pods log
+      - apiGroups: [""]
+        resources: ["pods/log"]
+        verbs: ["get", "list", "watch"]
+      # for creating and managing to execute commands inside target container
+      - apiGroups: [""]
+        resources: ["pods/exec"]
+        verbs: ["get", "list", "create"]
+      # for configuring and monitor the experiment job by the chaos-runner pod
+      - apiGroups: ["batch"]
+        resources: ["jobs"]
+        verbs: ["create", "list", "get", "delete", "deletecollection"]
+      # for creation, status polling and deletion of litmus chaos resources used within a chaos workflow
+      - apiGroups: ["litmuschaos.io"]
+        resources: ["chaosengines", "chaosexperiments", "chaosresults"]
+        verbs: ["create", "list", "get", "patch", "update", "delete"]
+      # for experiment to perform node status checks
+      - apiGroups: [""]
+        resources: ["nodes"]
+        verbs: ["get", "list"]
+    image: "litmuschaos.docker.scarf.sh/litmuschaos/go-runner:latest"
+    imagePullPolicy: Always
+    args:
+      - -c
+      - ./experiments -name rds-instance-stop
+    command:
+      - /bin/bash
+    env:
+      - name: TOTAL_CHAOS_DURATION
+        value: "30"
+
+      - name: CHAOS_INTERVAL
+        value: "30"
+
+      # Period to wait before and after injection of chaos in sec
+      - name: RAMP_TIME
+        value: ""
+
+      # Provide the RDS instance identifier
+      - name: RDS_INSTANCE_IDENTIFIER
+        value: ""
+
+      - name: REGION
+        value: ""
+
+      - name: INSTANCE_AFFECTED_PERC
+        value: ""
+
+      - name: SEQUENCE
+        value: "parallel"
+
+      - name: DEFAULT_HEALTH_CHECK
+        value: "false"
+
+      # Provide the path of AWS credentials mounted from secret
+      - name: AWS_SHARED_CREDENTIALS_FILE
+        value: "/tmp/cloud_config.yml"
+
+    labels:
+      name: rds-instance-stop
+      app.kubernetes.io/part-of: litmus
+      app.kubernetes.io/component: experiment-job
+      app.kubernetes.io/version: ci
+    secrets:
+      - name: cloud-secret
+        mountPath: /tmp/
