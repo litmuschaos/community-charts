@@ -4,8 +4,10 @@ metadata:
   name: argo-chaos-pod-delete-cron-wf
   namespace: litmus
   labels:
-    subject: "{{workflow.parameters.appNamespace}}_kube-proxy"
 spec:
+  workflowMetadata:
+    labels:
+      subject: "{{workflow.parameters.appNamespace}}_kube-proxy"
   schedule: "0 * * * *"
   concurrencyPolicy: "Forbid"
   startingDeadlineSeconds: 0

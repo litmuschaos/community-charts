@@ -4,8 +4,10 @@ metadata:
   name: argowf-chaos-pod-memory-hog
   namespace: litmus
   labels:
-    subject: "{{workflow.parameters.appNamespace}}_kube-proxy"
 spec:
+  workflowMetadata:
+    labels:
+      subject: "{{workflow.parameters.appNamespace}}_kube-proxy"
   entrypoint: argowf-chaos
   serviceAccountName: argo-chaos
   securityContext:
