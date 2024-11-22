@@ -88,6 +88,10 @@ spec:
       - name: LIB_IMAGE_PULL_POLICY
         value: "Always"
 
+      # Provide the prefix of the metric if you enabled observability
+      - name: OTEL_METRIC_PREFIX
+        value: "k6_"
+
     labels:
       name: k6-loadgen
       app.kubernetes.io/part-of: litmus

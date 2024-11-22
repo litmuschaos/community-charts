@@ -39,3 +39,7 @@ spec:
             # Provide the image pull policy of the helper pod
             - name: LIB_IMAGE_PULL_POLICY
               value: "Always"
+
+            # Provide the prefix of the metric if you enabled observability
+            - name: OTEL_METRIC_PREFIX
+              value: "k6_"
