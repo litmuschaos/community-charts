@@ -4,3 +4,6 @@ experiments:
   - name: k6-loadgen
     CSV: k6-loadgen.chartserviceversion.yaml
     desc: "k6-loadgen"
+  - name: locust-loadgen
+    CSV: locust-loadgen.chartserviceversion.yaml
+    desc: "locust-loadgen"

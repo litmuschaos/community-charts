@@ -1,0 +1,29 @@
+---
+apiVersion: litmuschaos.io/v1alpha1
+kind: ChartServiceVersion
+metadata:
+  createdAt: 2024-11-27T01:00:00Z
+  name: locust-loadgen
+  version: 0.1.0
+  annotations:
+    categories: Load
+    vendor: LitmusChaos
+spec:
+  displayName: locust Load Generator
+  categoryDescription: |
+     Locust is an open-source load testing tool designed to make performance testing simple, efficient, and scalable for engineering teams. With Locust, you can define user behavior and simulate traffic using a single, flexible Python script. With its distributed testing capabilities, you can efficiently simulate millions of users.
+  keywords:
+    - locust
+    - Load
+  platforms:
+    - kubernetes
+  maintainers:
+    - name: DongYoung Kim
+      email: kwx4957@gmail.com
+  minKubeVersion: 1.33.0
+  links:
+    - name: Documentation
+      url: https://litmuschaos.github.io/litmus/experiments/categories/contents
+  icon:
+    - url:
+      mediatype: ""

@@ -16,6 +16,9 @@ spec:
     - name: k6-loadgen
       description: It injects the load on the application using k6 load generator
       displayName: "k6 Load Generator"
+    - name: locust-loadgen
+      description: It injects the load on the application using locust load generator
+      displayName: "locust Load Generator"
   keywords:
     - Load
   maintainers:
@@ -27,6 +30,8 @@ spec:
       url: https://kubernetes.io
     - name: k6 Website
       url: https://k6.io/
+    - name: locust Website
+      url: https://locust.io/
   icon:
     - url: https://github.com/litmuschaos/chaos-charts/blob/master/faults/load/icons/k6-loadgen.png
       mediatype: image/png

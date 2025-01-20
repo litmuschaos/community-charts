@@ -1,0 +1,48 @@
+---
+apiVersion: litmuschaos.io/v1alpha1
+kind: ChaosEngine
+metadata:
+  name: nginx-chaos
+  namespace: default
+spec:
+  engineState: 'active'
+  chaosServiceAccount: litmus-admin
+  experiments:
+    - name: locust-loadgen
+      spec:
+        components:
+          env:
+            # set chaos duration (in sec) as desired
+            - name: TOTAL_CHAOS_DURATION
+              value: "30"
+
+            # Period to wait before and after injection of chaos in sec
+            - name: RAMP_TIME
+              value: "0"
+
+            - name: HOST
+              value: ""
+
+            # Define maximum users
+            - name: USERS
+              value: "40"
+
+           # Generate users per second
+            - name: SPAWN_RATE
+              value: "30"
+
+            # Provide the ConfigMap key of the Python script
+            - name: CONFIG_MAP_NAME
+              value: "locust-script"
+
+            # Provide the ConfigMap key of the Python script
+            - name: CONFIG_MAP_KEY
+              value: "config.py"
+
+            # Provide the image name of the helper pod
+            - name: LIB_IMAGE
+              value: "locustio/locust"
+
+            # Provide the image pull policy of the helper pod
+            - name: LIB_IMAGE_PULL_POLICY
+              value: "Always"

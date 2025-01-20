@@ -94,3 +94,106 @@ spec:
       app.kubernetes.io/component: experiment-job
       app.kubernetes.io/version: ci
 ---
+---
+apiVersion: litmuschaos.io/v1alpha1
+description:
+  message: |
+    Execute the locust engine using the Python script
+kind: ChaosExperiment
+metadata:
+  name: locust-loadgen
+  labels:
+    name: locust-loadgen
+    app.kubernetes.io/part-of: litmus
+    app.kubernetes.io/component: chaosexperiment
+    app.kubernetes.io/version: ci
+spec:
+  definition:
+    scope: Namespaced
+    permissions:
+      # Create and monitor the experiment & helper pods
+      - apiGroups: [""]
+        resources: ["pods"]
+        verbs:
+          [
+            "create",
+            "delete",
+            "get",
+            "list",
+            "patch",
+            "update",
+            "deletecollection",
+          ]
+      # Performs CRUD operations on the events inside chaosengine and chaosresult
+      - apiGroups: [""]
+        resources: ["events"]
+        verbs: ["create", "get", "list", "patch", "update"]
+      # Fetch configmaps & secrets details and mount it to the experiment pod (if specified)
+      - apiGroups: [""]
+        resources: ["configmaps"]
+        verbs: ["get", "list"]
+      # Track and get the runner, experiment, and helper pods log
+      - apiGroups: [""]
+        resources: ["pods/log"]
+        verbs: ["get", "list", "watch"]
+      # for creating and managing to execute commands inside target container
+      - apiGroups: [""]
+        resources: ["pods/exec"]
+        verbs: ["get", "list", "create"]
+      # for configuring and monitor the experiment job by the chaos-runner pod
+      - apiGroups: ["batch"]
+        resources: ["jobs"]
+        verbs: ["create", "list", "get", "delete", "deletecollection"]
+      # for creation, status polling and deletion of litmus chaos resources used within a chaos workflow
+      - apiGroups: ["litmuschaos.io"]
+        resources: ["chaosengines", "chaosexperiments", "chaosresults"]
+        verbs: ["create", "list", "get", "patch", "update", "delete"]
+    image: "litmuschaos.docker.scarf.sh/litmuschaos/go-runner:latest"
+    imagePullPolicy: Always
+    args:
+      - -c
+      - ./experiments -name locust-loadgen
+    command:
+      - /bin/bash
+    env:
+      # set chaos duration (in sec) as desired
+      - name: TOTAL_CHAOS_DURATION
+        value: "30"
+
+      # Period to wait before and after injection of chaos in sec
+      - name: RAMP_TIME
+        value: "0"
+
+      - name: HOST
+        value: ""
+
+      # Define maximum users
+      - name: USERS
+        value: "40"
+
+      # Generate users per second
+      - name: SPAWN_RATE
+        value: "30"
+
+      # Provide the secret key of the Python script
+      - name: CONFIG_MAP_FILE
+        value: "locust-script"
+
+      # Provide the ConfigMap key of the Python script
+      - name: CONFIG_MAP_KEY
+        value: "config.py"
+
+      # Provide the image name of the helper pod
+      - name: LIB_IMAGE
+        value: "locustio/locust"
+
+      # Provide the image pull policy of the helper pod
+      - name: LIB_IMAGE_PULL_POLICY
+        value: "Always"
+
+    labels:
+      name: locust-loadgen
+      app.kubernetes.io/part-of: litmus
+      app.kubernetes.io/component: experiment-job
+      app.kubernetes.io/version: ci
+---
